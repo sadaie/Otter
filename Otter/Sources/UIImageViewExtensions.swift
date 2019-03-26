@@ -15,22 +15,22 @@ extension UIImageView {
     public func setImage<U>(
         with url: U?,
         otterManager: OtterManager = .default,
+        settingHandler: ((UIImage) throws -> Void)? = nil,
         dataHandlingQueue: DispatchQueue? = nil,
         dataHandler: ((Data) throws -> UIImage)? = nil,
         transformingQueue: DispatchQueue = .main,
         transform: @escaping (UIImage) throws -> UIImage = { $0 }
-    ) -> Promise<Void> where U: URLConvertible {
+    ) rethrows -> Promise<Void> where U: URLConvertible {
         if let u = url {
-            return otterManager
+            let settingHandler = settingHandler ?? { [weak self] image in self?.image = image }
+            return try otterManager
                 .get(
                     for: u,
                     mappingQueue: dataHandlingQueue,
                     mapper: dataHandler
                 )
                 .then(on: transformingQueue, transform)
-                .then(on: .main) { [weak self] image in
-                    self?.image = image
-                }
+                .then(on: .main, settingHandler)
         } else {
             self.clearImage()
             return Promise(())
