@@ -1,6 +1,6 @@
 // (c) 2019 Sadaie Matsudaira.
-// This software licensed under the MIT Lincense.
-// See LINCENSE file in the project root for full license information.
+// This software licensed under the MIT License.
+// See LICENSE file in the project root for full license information.
 //
 
 public final class Configuration {
