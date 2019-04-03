@@ -20,25 +20,17 @@ extension UIImageView {
         dataHandler: ((Data) throws -> UIImage)? = nil,
         transformingQueue: DispatchQueue = .main,
         transform: @escaping (UIImage) throws -> UIImage = { $0 }
-    ) -> Promise<Void> where U: URLConvertible {
+    ) rethrows -> Promise<Void> where U: URLConvertible {
         if let u = url {
             let settingHandler = settingHandler ?? { [weak self] image in self?.image = image }
-            do {
-                let x = otterManager.get(for: "hoo").then(on: .main, settingHandler)
-                
-                let promise = try otterManager
-                    .get(
-                        for: u,
-                        mappingQueue: dataHandlingQueue,
-                        mapper: dataHandler
-                    )
-                    .then(on: transformingQueue, transform)
-                    .then(on: .main, settingHandler)
-                return promise
-            } catch let e {
-                let promise = Promise<Void>.pending()
-                return promise.reject(e)
-            }
+            return try otterManager
+                .get(
+                    for: u,
+                    mappingQueue: dataHandlingQueue,
+                    mapper: dataHandler
+                )
+                .then(on: transformingQueue, transform)
+                .then(on: .main, settingHandler)
         } else {
             self.clearImage()
             return Promise(())
