@@ -18,11 +18,13 @@ extension UIImageView {
         settingHandler: ((UIImage) throws -> Void)? = nil,
         dataHandlingQueue: DispatchQueue? = nil,
         dataHandler: ((Data) throws -> UIImage)? = nil,
-        transformingQueue: DispatchQueue = .main,
-        transform: @escaping (UIImage) throws -> UIImage = { $0 }
+        transformingQueue: DispatchQueue? = nil,
+        transform: ((UIImage) throws -> UIImage)? = nil
     ) rethrows -> Promise<Void> where U: URLConvertible {
         if let u = url {
             let settingHandler = settingHandler ?? { [weak self] image in self?.image = image }
+            let transformingQueue = transformingQueue ?? .main
+            let transform = transform ?? { $0 }
             return try otterManager
                 .get(
                     for: u,

@@ -32,9 +32,7 @@ class OtterTests: XCTestCase {
         let expectation = self.expectation(description: "download card image into image view")
 
         let imageView = UIImageView()
-        imageView.setImage(with: "https://matsuri-hi.me/card_image.png") { image in
-            image
-        }
+        imageView.setImage(with: "https://matsuri-hi.me/card_image.png")
         .catch { e in
             XCTFail(e.localizedDescription)
         }
