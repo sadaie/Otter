@@ -5,6 +5,7 @@
 
 import Alamofire
 import Promises
+import UIKit
 
 public enum Error: Swift.Error {
     case imageConversionError(Data?)
