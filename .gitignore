@@ -8,7 +8,7 @@
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
 # Carthage/Checkouts
 
-Carthage/
+Carthage/Build
 
 ### macOS ###
 # General
@@ -72,4 +72,4 @@ DerivedData/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.gitignore.io/api/xcode,macos,carthage
-Cartfile.resolved
+.swiftpm

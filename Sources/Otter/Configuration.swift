@@ -3,6 +3,8 @@
 // See LICENSE file in the project root for full license information.
 //
 
+import Foundation
+
 public final class Configuration {
     internal let urlSessionConfiguration: URLSessionConfiguration
     internal let requestInspector: (URLRequest) throws -> URLRequest
