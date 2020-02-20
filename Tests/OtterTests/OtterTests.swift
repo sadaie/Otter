@@ -12,6 +12,7 @@ class OtterTests: XCTestCase {
         let expectation = self.expectation(description: "download card image")
 
         OtterManager.default.get(for: "https://matsuri-hi.me/card_image.png").then {
+            NSLog("\($0)")
             if $0.size.height == 1_024, $0.size.width == 1_024 {
                 return // ok
             } else {
